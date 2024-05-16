@@ -23,11 +23,14 @@
                                     class="fas fa-search text-primary"></i></button> -->
                             <c:if test="${not empty pageContext.request.userPrincipal}">
 
-                                <a href="#" class="position-relative me-4 my-auto">
+                                <a href="/cart" class="position-relative me-4 my-auto">
                                     <i class="fa fa-shopping-bag fa-2x"></i>
                                     <span
                                         class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                        style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                                        <!-- lay dong tham so dua vao session -->
+                                        ${sessionScope.sum}
+                                    </span>
                                 </a>
                                 <div class="dropdown my-auto">
                                     <a href="#" class="dropdown" role="button" id="dropdownMenuLink"
@@ -42,7 +45,7 @@
                                             <div class="text-center my-3">
                                                 <!-- lấy name ng dùng đăng nhập thông qua spring security -->
                                                 <!-- <c:out value="${pageContext.request.userPrincipal.name}" /> -->
-                                                  <c:out value="${sessionScope.fullName}" />
+                                                <c:out value="${sessionScope.fullName}" />
                                             </div>
                                         </li>
                                         <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>

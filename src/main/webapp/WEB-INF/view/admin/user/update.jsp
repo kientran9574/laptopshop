@@ -13,6 +13,25 @@
                 <title>Dashboard - KO</title>
                 <link href="../../../css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(() => {
+                        const avatarFile = $("#avatarFile");
+                        const orgImage = "${newsProducts.image}";
+                        if (orgImage) {
+                            const urlImage = "/images/product/" + orgImage;
+                            $("#avatarPreview").attr("src", urlImage);
+                            $("#avatarPreview").css({ "display": "block" });
+                        }
+
+                        avatarFile.change(function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+                        });
+                    });
+
+                </script>
             </head>
 
             <body class="sb-nav-fixed">
@@ -64,7 +83,15 @@
                                                     <form:input type="text" name="" id="" class="form-control"
                                                         path="fullname" />
                                                 </div>
-
+                                                <!-- <div class="mb-3 col-12 col-md-6">
+                                                    <label for="avatarFile" class="form-label">Product:</label>
+                                                    <input class="form-control" type="file" id="avatarFile"
+                                                        accept=".png, .jpg, .jpeg" name="hoidanitFile">
+                                                </div>
+                                                <div class="mb-3 col-12">
+                                                    <img alt="avatarPreview" style="max-height: 250px; display: none;"
+                                                        id="avatarPreview">
+                                                </div> -->
                                                 <button type="submit" class="btn btn-warning">Update</button>
                                             </form:form>
                                         </div>

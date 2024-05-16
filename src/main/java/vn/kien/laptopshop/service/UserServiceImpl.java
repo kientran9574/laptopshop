@@ -9,18 +9,25 @@ import org.springframework.stereotype.Service;
 import vn.kien.laptopshop.model.Role;
 import vn.kien.laptopshop.model.User;
 import vn.kien.laptopshop.model.dto.RegisterDTO;
+import vn.kien.laptopshop.repository.OrderRepository;
+import vn.kien.laptopshop.repository.ProductRepository;
 import vn.kien.laptopshop.repository.RoleRepository;
 import vn.kien.laptopshop.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private ProductRepository productRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
+            ProductRepository productRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -69,8 +76,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmailUser(String email) {
+    public User getByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
-    
+
+    public long countUser() {
+        return this.userRepository.count();
+    }
+
+    public long countProduct() {
+        return this.productRepository.count();
+    }
+
+    public long countOrder() {
+        return this.orderRepository.count();
+    }
 }

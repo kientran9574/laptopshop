@@ -2,7 +2,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/admin">Laptopshop</a>
+            <a class="navbar-brand ps-3" href="/">Laptopshop</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                     class="fas fa-bars"></i></button>
@@ -26,9 +26,9 @@
                     <ul class="dropdown-menu dropdown-menu-end p-4" arialabelledby="dropdownMenuLink">
                         <li class="d-flex align-items-center flex-column" style="min-width: 300px;">
                             <img style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden;"
-                                src="/images/product/1711078092373-asus-01.png" />
+                                src="/images/avatar/${sessionScope.avatar}" />
                             <div class="text-center my-3">
-                                <c:out value="${pageContext.request.userPrincipal.name}" />
+                                <c:out value="${sessionScope.fullName}" />
                             </div>
                         </li>
                         <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>

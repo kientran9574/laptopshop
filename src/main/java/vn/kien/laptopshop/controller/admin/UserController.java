@@ -103,10 +103,12 @@ public class UserController {
     public String updateUser(@ModelAttribute("newsUser") User user) {
         Optional<User> optionalUser = this.userService.findById(user.getId());
         if (optionalUser.isPresent() && optionalUser != null) {
+            // String avatar = this.uploadFileService.handleUploadFile(file, "avatar");
             User userUpdate = optionalUser.get();
             userUpdate.setAddress(user.getAddress());
             userUpdate.setFullname(user.getFullname());
             userUpdate.setNumber(user.getNumber());
+            // userUpdate.setAvatar(avatar);
             this.userService.saveUser(userUpdate);
             return "redirect:/admin/user";
         } else {

@@ -76,7 +76,8 @@ public class SecurityConfiguration {
         authProvider.setHideUserNotFoundExceptions(false);
         return authProvider;
     }
-    
+
+    @Bean
     public AuthenticationSuccessHandler customSuccessHandler() {
         // class custom của chúng ta
         return new CustomSuccessHandler();
@@ -104,22 +105,24 @@ public class SecurityConfiguration {
                         .permitAll()
                         // đây sẽ là đường link mà cho phép tất cả người dùng truy cập
                         .requestMatchers("/", "/login", "/product/**", "/client/**", "/css/**", "/js/**",
-                                "/images/**")
+                                "/images/**", "/register")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
-                //  quản lý session 
+                // quản lý session
                 .sessionManagement((sessionManagement) -> sessionManagement
-                // luôn tạo session mới , nếu như ng dùng chưa có session chúng ta sẽ tạo mới
+                        // luôn tạo session mới , nếu như ng dùng chưa có session chúng ta sẽ tạo mới
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                         // trong trường hợp mà chúng ta hết hạn session sẽ tự động logout các bạn ra
                         .invalidSessionUrl("/logout?expired")
-                        // tại một thời điểm có bao nhiêu tài khoản đăng nhập  , giới hạn 1 tài khoản đăng nhập tối đa trên bao nhiêu thiết bị
+                        // tại một thời điểm có bao nhiêu tài khoản đăng nhập , giới hạn 1 tài khoản
+                        // đăng nhập tối đa trên bao nhiêu thiết bị
                         .maximumSessions(1)
                         // nếu như có 2 người đăng nhạp vào , người thứ hai sẽ đá người trước ra
                         .maxSessionsPreventsLogin(false))
-                        // mỗi lần các bạn đăng xuất ra sẽ xóa đi cái cookie này , đồng thời báo cho serve biết là cái session hết hạn
-                .logout(logout->logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
+                // mỗi lần các bạn đăng xuất ra sẽ xóa đi cái cookie này , đồng thời báo cho
+                // serve biết là cái session hết hạn
+                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
                 // ---------------------------------------------------------
                 .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
                 .formLogin(formLogin -> formLogin

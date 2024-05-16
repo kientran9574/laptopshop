@@ -12,6 +12,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ import vn.kien.laptopshop.model.User;
 import vn.kien.laptopshop.service.UserService;
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Autowired
     private UserService userService;
@@ -45,6 +46,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         throw new IllegalStateException();
     }
+
     protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
         // lời gọi request này nếu như tồn tại một session rồi , sử dụng lại session đấy
         // không tạo mới
@@ -60,10 +62,18 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         String email = authentication.getName();
-        User user = this.userService.findByEmailUser(email);
+        User user = this.userService.getByEmail(email);
         if (user != null) {
             session.setAttribute("fullName", user.getFullname());
             session.setAttribute("avatar", user.getAvatar());
+            session.setAttribute("id", user.getId());
+            session.setAttribute("email", user.getEmail());
+            // sd lap trinh huong doi tuong de lay ra gio hang
+            // viec chung ta sd getCart nay the nay no se join hai bang lai , no se lay cai cart ung voi user nay
+            // tong so luong san pham trong  don hang
+            int sum = user.getCart() == null ? 0 : user.getCart().getSum();
+            session.setAttribute("sum", sum);
+            // tiep buoc la hien thi giao dien no ra
         }
     }
 

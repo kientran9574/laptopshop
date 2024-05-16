@@ -21,7 +21,7 @@ public class CustomUserDetailsServices implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        vn.kien.laptopshop.model.User user = this.userService.findByEmailUser(username);
+        vn.kien.laptopshop.model.User user = this.userService.getByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("user not login");
         }

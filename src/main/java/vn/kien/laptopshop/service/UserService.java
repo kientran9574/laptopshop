@@ -21,5 +21,5 @@ public interface UserService {
     User registerDTOtoUser(RegisterDTO registerDTO);
 
     boolean existsByEmails(String email);
-    User findByEmailUser(String email);
+    User getByEmail(String email);
 }
